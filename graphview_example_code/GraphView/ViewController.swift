@@ -117,7 +117,10 @@ class ViewController: UIViewController {
         graphView.referenceLineColor = UIColor.white.withAlphaComponent(0.2)
         graphView.referenceLineLabelColor = UIColor.white
         graphView.numberOfIntermediateReferenceLines = 5
+
         graphView.dataPointLabelColor = UIColor.white.withAlphaComponent(0.5)
+        graphView.xAxisLabelRotation = 45
+        graphView.dataPointLabelTopMargin = 15
         
         graphView.shouldAnimateOnStartup = true
         graphView.shouldAdaptRange = true
