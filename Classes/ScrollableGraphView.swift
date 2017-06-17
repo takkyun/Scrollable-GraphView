@@ -214,6 +214,8 @@ import UIKit
     
     /// Whether or not to show the labels on the x-axis for each point.
     @IBInspectable open var shouldShowLabels: Bool = true
+    /// Rotation for the labes on the x-axis, default = 0 (no rotation)
+    @IBInspectable open var xAxisLabelRotation: CGFloat = 0
     /// How far from the "minimum" reference line the data point labels should be rendered.
     @IBInspectable open var dataPointLabelTopMargin: CGFloat = 10
     /// How far from the bottom of the view the data point labels should be rendered.
@@ -240,7 +242,7 @@ import UIKit
         didSet { if(oldValue != viewportWidth) { viewportDidChange() }}
     }
     private var viewportHeight: CGFloat = 0 {
-        didSet { if(oldValue != viewportHeight) { viewportDidChange() }}
+      didSet { if(oldValue != viewportHeight) { viewportDidChange() }}
     }
     
     private var totalGraphWidth: CGFloat = 0
@@ -1007,6 +1009,10 @@ import UIKit
             label.frame = CGRect(origin: CGPoint(x: position.x - label.frame.width / 2, y: position.y + dataPointLabelTopMargin), size: label.frame.size)
             
             let _ = labelsView.subviews.filter { $0.frame == label.frame }.map { $0.removeFromSuperview() }
+
+            if xAxisLabelRotation != 0 {
+                label.transform = CGAffineTransform.identity.rotated(by: xAxisLabelRotation * .pi / 180)
+            }
 
             labelsView.addSubview(label)
         }
