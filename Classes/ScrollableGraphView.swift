@@ -431,6 +431,7 @@ import UIKit
         displayLink?.invalidate()
         previousTimestamp = 0
         currentTimestamp = 0
+        zeroYPosition = 0
         
         previousActivePointsInterval = -1 ..< -1
         activePointsInterval = -1 ..< -1
@@ -849,6 +850,10 @@ import UIKit
         
         currentLinePath.removeAllPoints()
         
+        if graphPoints.isEmpty || viewportHeight <= 0 {
+            return currentLinePath
+        }
+
         let pathSegmentAdder = lineStyle == .straight ? addStraightLineSegment : addCurvedLineSegment
         
         zeroYPosition = calculatePosition(atIndex: 0, value: self.range.min).y
