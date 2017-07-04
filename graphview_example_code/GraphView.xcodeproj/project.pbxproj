@@ -47,7 +47,9 @@
 				29559B7C1C72E72B00E77931 /* Supporting Files */,
 				2918399F1C72E6A400753A45 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		2918399F1C72E6A400753A45 /* Products */ = {
 			isa = PBXGroup;
