@@ -214,7 +214,7 @@ import UIKit
     
     /// Whether or not to show the labels on the x-axis for each point.
     @IBInspectable open var shouldShowLabels: Bool = true
-    /// Rotation for the labes on the x-axis, default = 0 (no rotation)
+    /// Rotation for the labels on the x-axis, default = 0 (no rotation)
     @IBInspectable open var xAxisLabelRotation: CGFloat = 0
     /// How far from the "minimum" reference line the data point labels should be rendered.
     @IBInspectable open var dataPointLabelTopMargin: CGFloat = 10
