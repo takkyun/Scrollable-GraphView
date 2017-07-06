@@ -216,6 +216,8 @@ import UIKit
     @IBInspectable open var shouldShowLabels: Bool = true
     /// Rotation for the labels on the x-axis, default = 0 (no rotation)
     @IBInspectable open var xAxisLabelRotation: CGFloat = 0
+    /// Text alignment for the labels on the x-axis, default = .center
+    @IBInspectable open var xAxisLabelAlignment: NSTextAlignment = .left
     /// How far from the "minimum" reference line the data point labels should be rendered.
     @IBInspectable open var dataPointLabelTopMargin: CGFloat = 10
     /// How far from the bottom of the view the data point labels should be rendered.
@@ -1010,13 +1012,27 @@ import UIKit
             // self.rangeMin is the minimum that should be used as specified by the user
             let rangeMin = (shouldAutomaticallyDetectRange || shouldAdaptRange) ? self.range.min : self.rangeMin
             let position = calculatePosition(atIndex: point, value: rangeMin)
+            var positionOffset = label.frame.width / 2
+            var rotationOffset = CGPoint.zero
+            if xAxisLabelAlignment == .left {
+                positionOffset = 0
+                rotationOffset = CGPoint(x: -label.bounds.midX, y: -label.bounds.midY)
+            }
+            else if xAxisLabelAlignment == .right {
+                positionOffset = label.frame.width
+                rotationOffset = CGPoint(x: label.bounds.midX, y: label.bounds.midY)
+            }
             
-            label.frame = CGRect(origin: CGPoint(x: position.x - label.frame.width / 2, y: position.y + dataPointLabelTopMargin), size: label.frame.size)
+            label.frame = CGRect(origin: CGPoint(x: position.x - positionOffset, y: position.y + dataPointLabelTopMargin), size: label.frame.size)
             
             let _ = labelsView.subviews.filter { $0.frame == label.frame }.map { $0.removeFromSuperview() }
 
             if xAxisLabelRotation != 0 {
-                label.transform = CGAffineTransform.identity.rotated(by: xAxisLabelRotation * .pi / 180)
+                var transform = CGAffineTransform.identity
+                transform = transform.translatedBy(x: rotationOffset.x, y: rotationOffset.y)
+                transform = transform.rotated(by: xAxisLabelRotation * .pi / 180)
+                transform = transform.translatedBy(x: -rotationOffset.x, y: -rotationOffset.y)
+                label.transform = transform
             }
 
             labelsView.addSubview(label)
