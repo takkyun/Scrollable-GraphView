@@ -976,7 +976,11 @@ import UIKit
     private func updatePaths() {
         
         createLinePath()
-        
+
+        if viewportHeight <= 0 {
+            return
+        }
+
         if let drawingLayers = drawingView.layer.sublayers {
             for layer in drawingLayers {
                 if let layer = layer as? ScrollableGraphViewDrawingLayer {
